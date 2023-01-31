@@ -1,0 +1,39 @@
+﻿/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) [AccountingID]
+      ,[ItemNumber]
+      ,[TotalInventoryValue]
+  FROM [Sample].[dbo].[Accounting]
+
+
+  /****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) [inventoryID]
+      ,[ItemNumber]
+      ,[WarehouseLocation]
+      ,[QuantityOnHand]
+      ,[Price]
+  FROM [Sample].[dbo].[Inventory]
+
+--Finding matching items
+  select acc.ItemNumber, acc.ItemNumber
+  FROM [dbo].[Accounting] as acc
+  INNER JOIN [dbo].[Inventory] as inv
+  ON acc.ItemNumber = inv.ItemNumber
+
+ 
+--Finding diffent items using temp tables
+  select [ItemNumber]  INTO tempAccounting
+  FROM [dbo].[Accounting] 
+
+SELECT [ItemNumber] INTO tempInventory     
+  FROM [Sample].[dbo].[Inventory]
+
+SELECT  [ItemNumber] 
+FROM
+	(SELECT * FROM tempAccounting 
+	 UNION ALL
+	 SELECT * FROM tempInventory )
+  tempAccounting 
+GROUP BY  [ItemNumber] 
+HAVING COUNT(*) = 1
+ 
+  
