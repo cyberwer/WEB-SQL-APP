@@ -11,8 +11,8 @@ namespace Bargreen.API
         {
             CreateWebHostBuilder(args).Build().Run();
 
-            //var builder = WebApplication.CreateBuilder(arg);
-            //builder.Services.AddTransient<IInventoryService, InventoryService>();
+            var builder = WebApplication.CreateBuilder(arg);
+            builder.Services.AddTransient<IInventoryService, InventoryService>();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

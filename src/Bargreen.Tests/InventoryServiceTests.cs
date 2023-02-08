@@ -20,16 +20,15 @@ namespace Bargreen.Tests
         public void Inventory_Reconciliation_Performs_As_Expected()
         {
             //TODO-CHALLENGE: Verify expected output of your recon algorithm. Note, this will probably take more than one test
-            var inventoryBalance =  _inventoryService.GetInventoryBalancesAsync();
+            var inventoryBalance = await _inventoryService.GetInventoryBalancesAsync();
 
-            var accountingBalance =  _inventoryService.GetAccountingBalancesAsync();
+            var accountingBalance = await _inventoryService.GetAccountingBalancesAsync();
 
-            //Assert.IsTrue(accountingBalance.SequenceEqual(inventoryBalance));
-            //Assert.Equal(accountingBalance, inventoryBalance);
-            //Assert.AreEqual(accountingBalance, inventoryBalance);
-            //CollectionAssert.AreEqual(accountingBalance, inventoryBalance);
-            //Assert.IsTrure(accountingBalance, inventoryBalance);
-            //new test
+            Assert.IsTrue(accountingBalance.SequenceEqual(inventoryBalance));
+            Assert.Equal(accountingBalance, inventoryBalance);
+            Assert.AreEqual(accountingBalance, inventoryBalance);
+            CollectionAssert.AreEqual(accountingBalance, inventoryBalance);
+            Assert.IsTrure(accountingBalance, inventoryBalance);           
 
         }
     }
