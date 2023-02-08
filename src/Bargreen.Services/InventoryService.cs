@@ -111,10 +111,10 @@ namespace Bargreen.Services
         {
             //TODO-CHALLENGE: Compare inventory balances to accounting balances and find differences
 
-
-            List<InventoryReconciliationResult> result = new List<InventoryReconciliationResult>();
+            List<InventoryReconciliationResult> Matched = new List<InventoryReconciliationResult>();
+            List<InventoryReconciliationResult> unMatched = new List<InventoryReconciliationResult>();
             var differenceQuery = inventoryBalances.Equals(accountingBalances);
-            if (differenceQuery)
+            if (!differenceQuery)
             {
                 foreach (var inventoryItem in inventoryBalances)
                 {
@@ -122,7 +122,13 @@ namespace Bargreen.Services
                     {
                         if(inventoryItem.ItemNumber  == accountingItem.ItemNumber)
                         {
-                            //we have a match, do nothing or create matching inventory list
+                            var list = new InventoryReconciliationResult
+                            {
+                                TotalValueInAccountingBalance = inventoryItem.QuantityOnHand,
+                                TotalValueOnHandInInventory = accountingItem.TotalInventoryValue,
+                                ItemNumber = accountingItem.ItemNumber
+                            };
+                            Matched.Add(list);
                         }
                         else
                         {
@@ -131,15 +137,15 @@ namespace Bargreen.Services
                                 TotalValueInAccountingBalance = inventoryItem.QuantityOnHand,
                                 TotalValueOnHandInInventory = accountingItem.TotalInventoryValue,
                                 ItemNumber = accountingItem.ItemNumber
-                            };                            
-                            result.Add(list);
+                            };
+                            unMatched.Add(list);
                         }
                     }
                 }
                
             }
 
-            return result;
+            return unMatched;
 
         }
     }
